@@ -3,7 +3,7 @@
 require 'discordrb'
 
 TOKEN = 'HOGEHOGE'
-TTS_CHANNELS = ['#General'].freeze
+TTS_CHANNELS = '#General'
 MP3_DIR      = '/data/se'
 
 bot = Discordrb::Commands::CommandBot.new token: TOKEN, prefix: '!'
@@ -24,12 +24,12 @@ end
 
 bot.message(end_with: '募集') do |event|
   msgs = event.content.split('募集')[0]
-  unless hash.key?(msgs)
-    event.send_message("【#{msg}】はすでに募集中です！")
+  if hash.key?(msgs)
+    event.send_message("【#{msgs}】はすでに募集中です！")
     hash.each do |h|
       event << "```【#{h[0]}】 参加者: #{h[1].join(', ')}```"
     end
-    return nil
+    next
   end
   msg = msgs
   user = event.user
