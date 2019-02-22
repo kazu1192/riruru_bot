@@ -106,7 +106,7 @@ bot.command(:se, description: 'Play SE', usage: '!se NAME') do |event, name|
 end
 
 bot.command(:list, description: 'List SE', usage: '!list') do |event|
-  list = Pathname.glob("#{MP3_DIR}/*").map(&:basename)
+  list = Dir.glob("#{MP3_DIR}/*").map{|f| File.basename(f)}
   event << "```#{list}```"
 end
 
